@@ -5,6 +5,11 @@ const bodyParser = require("body-parser");
 /*const flash = require("express-flash");
 const session = require("express-session");*/
 
+//Importing routes
+const adminRoute = require("./Routes/adminRoute");
+const bookingRoute = require("./Routes/bookingRoute");
+const confirmationRoute = require("./Routes/confirmationRoute");
+
 const {database, databasePort} = require("./Config/config");
 
 const app = express();
@@ -13,6 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(adminRoute);
+app.use(bookingRoute);
+app.use(confirmationRoute);
 
 // Används för flash-meddelanden. Importera sen!!!
 //Use for express-flash/express-session
