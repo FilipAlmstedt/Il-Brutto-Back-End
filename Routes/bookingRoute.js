@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getBookingTable,
+  addBooking,
+} = require("../Controllers/bookingController");
 
-//Importera controllers här
-
-router.get("/reservations", /*BookingController för att visa lediga tider*/);
-router.post("/reservations", /*BookingController to make a reservation*/);
+router.get("/reservations", getBookingTable);
+router.post("/reservations", addBooking);
 
 module.exports = router;
