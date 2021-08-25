@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
-
-//Importera controllers här
+const {
+  getBookingRef,
+  deleteBooking,
+} = require("../Controllers/confirmationController");
 
 //ConfirmationPage - Collect specific reservation
-router.get("/confirmReservation/:id", /* ConfirmationController som ska hitta en specifik bokning */);
+router.get("/confirmReservation/:id", getBookingRef);
 
 //ConfirmationPage - Delete specific reservation
-router.get("/deleteReservation/:id", /* Controller som ska radera specifik bokning */);
+router.get("/deleteReservation/:id", deleteBooking);
 
 module.exports = router;
