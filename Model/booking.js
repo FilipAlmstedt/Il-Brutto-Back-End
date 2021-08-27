@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
-  date: {type: new Date},
+  date: {type: Date, default: Date.now},
   bookingRef: {type: String},
-  guestAmount: {type: Number}, 
-  seatingTime: {type: String},
+  guestAmount: {type: Number},
+  seatingTime: {type: String}, 
 
   customerInfo: {
     firstName: {type: String},
