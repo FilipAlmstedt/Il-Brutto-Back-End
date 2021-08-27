@@ -1,5 +1,7 @@
-const getBookingTable = async (req, res) => {
+const Booking = require("../Model/booking");
 
+const getBookingTable = async (req, res) => {
+    
 }
 
 const addBooking = async (req, res) => {

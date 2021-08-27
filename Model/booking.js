@@ -4,6 +4,7 @@ const bookingSchema = new mongoose.Schema({
   date: {type: new Date},
   bookingRef: {type: String},
   guestAmount: {type: Number}, 
+  seatingTime: {type: String},
 
   customerInfo: {
     firstName: {type: String},
@@ -11,7 +12,6 @@ const bookingSchema = new mongoose.Schema({
     email: {type: String},
     tel: {type: Number},
     additionalInfo: {type:String}
-    
   }
 });
 
