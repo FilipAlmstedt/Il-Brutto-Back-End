@@ -1,8 +1,11 @@
+const express = require("express")
 const Booking = require("../Model/booking");
+
 const getBookingTable = async (req, res) => {
   const { chosenDate } = req.body;
-  const bookings = await Booking.find({ date: chosenDate });
+  const bookings = await Booking.find();
 
+  console.log(bookings);
   res.send(bookings);
 };
 
