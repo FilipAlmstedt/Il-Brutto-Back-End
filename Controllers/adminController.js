@@ -4,13 +4,17 @@ const getBookingTable = async (req, res) => {
   const { chosenDate } = req.body;
   const bookings = await Booking.find();
 
-  console.log(bookings);
+  //console.log(bookings);
   res.send(bookings);
 };
 
 const addBooking = async (req, res) => {
-    const { customerInfo } = req.body
-    console.log(customerInfo.lastName);
+    const { date, bookingRef, seatingTime, guestAmount ,customerInfo } = req.body
+    console.log(customerInfo);
+    console.log(date);
+    console.log(bookingRef);
+    console.log(seatingTime);
+    console.log(guestAmount);
 };
 
 const getBookingRef = async (req, res) => {};
