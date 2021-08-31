@@ -9,7 +9,7 @@ const getBookingTable = async (req, res) => {
 };
 
 const addBooking = async (req, res) => {
-    const { date, bookingRef, seatingTime, guestAmount ,customerInfo } = req.body
+    const { date, bookingRef, seatingTime, guestAmount , customerInfo } = req.body
     console.log(customerInfo);
     console.log(date);
     console.log(bookingRef);
@@ -17,19 +17,37 @@ const addBooking = async (req, res) => {
     console.log(guestAmount);
 
     await new Booking ({
-      date:date,
-      bookingRef:bookingRef,
-      seatingTime:seatingTime,
-      guestAmount:guestAmount,
-      customerInfo:customerInfo
-
-
+      date: date,
+      bookingRef: bookingRef,
+      seatingTime: seatingTime,
+      guestAmount: guestAmount,
+      customerInfo: customerInfo
     }).save();
+
 };
 
-const getBookingRef = async (req, res) => {};
+// Collect one specfic booking object from DB that is used for the edit component in Front-End
+const getBookingRef = async (req, res) => {
+  const editBooking = await Booking.findOne({bookingRef: req.params.id});
+  res.json(editBooking);
+};
 
-const updateBooking = async (req, res) => {};
+// Collect a booking object and update in DB
+const updateBooking = async (req, res) => {
+  // Collect attributes from front-end object
+  const { date, bookingRef, seatingTime, guestAmount , customerInfo } = req.body;
+
+  // Update in DB
+  await Booking.updateOne(
+    {bookingRef: bookingRef},
+    {
+      date: date,
+      seatingTime: seatingTime,
+      guestAmount: guestAmount,
+      customerInfo: customerInfo
+    }
+  );
+};
 
 const deleteBooking = async (req, res) => {};
 
