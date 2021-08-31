@@ -15,6 +15,16 @@ const addBooking = async (req, res) => {
     console.log(bookingRef);
     console.log(seatingTime);
     console.log(guestAmount);
+
+    await new Booking ({
+      date:date,
+      bookingRef:bookingRef,
+      seatingTime:seatingTime,
+      guestAmount:guestAmount,
+      customerInfo:customerInfo
+
+
+    }).save();
 };
 
 const getBookingRef = async (req, res) => {};
