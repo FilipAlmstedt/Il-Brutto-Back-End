@@ -12,8 +12,8 @@ const {
 router.get("/admin", getBookingTable);
 router.post("/admin", addBooking);
 
-//Admin - delete reservation
-router.get("deleteReservation/:id", deleteBooking);
+//Admin - delete reservation, using bookingRef as route
+router.delete("/admin/delete/:id", deleteBooking);
 
 //Admin - update reservation
 router.get("/editReservation/:id", getBookingRef);

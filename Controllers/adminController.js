@@ -1,4 +1,4 @@
-const Booking = require("../Model/booking")
+const Booking = require("../Model/booking");
 
 // FInd all bookings in DB and send to front end
 const getBookingTable = async (req, res) => {
@@ -8,7 +8,8 @@ const getBookingTable = async (req, res) => {
 
 // Collect booking info and store in DB
 const addBooking = async (req, res) => {
-    const { date, bookingRef, seatingTime, guestAmount , customerInfo } = req.body;
+
+    const { date, bookingRef, seatingTime, guestAmount, customerInfo } = req.body;
 
     await new Booking ({
       date: date,
@@ -17,7 +18,7 @@ const addBooking = async (req, res) => {
       guestAmount: guestAmount,
       customerInfo: customerInfo
     }).save();
-
+  
 };
 
 // Collect one specfic booking object from DB that is used for the edit component in Front-End
@@ -43,7 +44,14 @@ const updateBooking = async (req, res) => {
   );
 };
 
-const deleteBooking = async (req, res) => {};
+// Collect id which is booking ref and delete said reservation in DB
+const deleteBooking = async (req, res) => {
+  const bookingRef = req.params.id;
+
+  //deleting booking based on bookingRef
+  await Booking.deleteOne({ bookingRef: bookingRef });
+  res.send(`Booking with reference ${bookingRef} has been deleted`);
+};
 
 module.exports = {
   getBookingTable,
