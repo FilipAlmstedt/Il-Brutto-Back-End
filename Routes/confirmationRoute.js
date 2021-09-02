@@ -6,7 +6,7 @@ const {
 } = require("../Controllers/confirmationController");
 
 //ConfirmationPage - Collect specific reservation
-router.get("/confirmReservation/:id", getBookingRef);
+router.get("/confirmedReservation/:id", getBookingRef);
 
 //ConfirmationPage - Delete specific reservation
 router.get("/deleteReservation/:id", deleteBooking);
