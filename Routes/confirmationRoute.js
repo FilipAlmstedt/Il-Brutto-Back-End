@@ -9,6 +9,6 @@ const {
 router.get("/confirmedReservation/:id", getBookingRef);
 
 //ConfirmationPage - Delete specific reservation
-router.get("/deleteReservation/:id", deleteBooking);
+router.delete("/deleteReservation/:id", deleteBooking);
 
 module.exports = router;
