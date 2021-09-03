@@ -1,4 +1,3 @@
-const express = require("express")
 const Booking = require("../Model/booking");
 
 const getBookingTable = async (req, res) => {
