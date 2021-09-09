@@ -54,7 +54,7 @@ const addBooking = async (req, res) => {
         `,
     });
 
-    res.send("Added new reservation to customer from Admin!")
+    res.send("Added new reservation to customer from Admin!");
 };
 
 // Collect one specfic booking object from DB that is used for the edit component in Front-End
