@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require("cors")
+const cors = require("cors");
 
 /*const flash = require("express-flash");
 const session = require("express-session");*/

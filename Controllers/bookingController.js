@@ -19,6 +19,27 @@ const addBooking = async (req, res) => {
     customerInfo: customerInfo
   }).save();
 
+  // After we add a reservation to DB, collect that object and send a confirmation mail
+  const sendMailBookingInfo = await Booking.findOne({ bookingRef: bookingRef });
+
+  // Send confirmation mail with a link, to the confirmation page showing the booking information
+  await transport.sendMail({
+    from: nodeMailerUser, 
+    to: sendMailBookingInfo.customerInfo.email,
+    subject: "Thank you for your reservation!",
+    html: `
+        <h1>Thank you for your reservation ${sendMailBookingInfo.customerInfo.firstName}!</h1>
+        
+        <p>For more information regarding your reservation information, visit <a href="http://localhost:3000/confirmation/${sendMailBookingInfo.bookingRef}">this link</a></p>
+
+        <p> To visit our website, please click <a href="http://localhost:3000/">here!</a></p>
+
+        <p>Have a good meal!,</p>
+        <p>Il Brutto</p>
+
+      `,
+  });
+
   res.send("Added a reservation to new customer!")
 };
 
