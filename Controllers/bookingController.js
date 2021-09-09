@@ -1,5 +1,18 @@
 const Booking = require("../Model/booking");
+const nodemailer = require("nodemailer")
+const {
+  nodeMailerPassword,
+  nodeMailerUser
+} = require("../Config/config");
 
+// Transport to initiate nodemailer
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: nodeMailerUser,
+    pass: nodeMailerPassword,
+  },
+});
 // Request to get all bookings to then see which reservations that are availible
 const getBookingTable = async (req, res) => {
   const bookings = await Booking.find();
