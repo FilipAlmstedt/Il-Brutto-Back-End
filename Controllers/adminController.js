@@ -1,9 +1,6 @@
 const Booking = require("../Model/booking");
-const nodemailer = require("nodemailer")
-const {
-    nodeMailerPassword,
-    nodeMailerUser
-} = require("../Config/config");
+const nodemailer = require("nodemailer");
+const { nodeMailerPassword, nodeMailerUser } = require("../Config/config");
 
 // Transport to initiate nodemailer
 const transport = nodemailer.createTransport({
@@ -22,26 +19,25 @@ const getBookingTable = async (req, res) => {
 
 // Collect booking info and store in DB
 const addBooking = async (req, res) => {
+  const { date, bookingRef, seatingTime, guestAmount, customerInfo } = req.body;
 
-    const { date, bookingRef, seatingTime, guestAmount, customerInfo } = req.body;
+  await new Booking({
+    date: date,
+    bookingRef: bookingRef,
+    seatingTime: seatingTime,
+    guestAmount: guestAmount,
+    customerInfo: customerInfo,
+  }).save();
 
-    await new Booking ({
-      date: date,
-      bookingRef: bookingRef,
-      seatingTime: seatingTime,
-      guestAmount: guestAmount,
-      customerInfo: customerInfo
-    }).save();
-  
-    // After we add a reservation to DB, collect that object and send a confirmation mail
-    const sendMailBookingInfo = await Booking.findOne({ bookingRef: bookingRef });
+  // After we add a reservation to DB, collect that object and send a confirmation mail
+  const sendMailBookingInfo = await Booking.findOne({ bookingRef: bookingRef });
 
-    // Send confirmation mail with a link, to the confirmation page showing the booking information
-    await transport.sendMail({
-      from: nodeMailerUser, 
-      to: sendMailBookingInfo.customerInfo.email,
-      subject: "Thank you for your reservation!",
-      html: `
+  // Send confirmation mail with a link, to the confirmation page showing the booking information
+  await transport.sendMail({
+    from: nodeMailerUser,
+    to: sendMailBookingInfo.customerInfo.email,
+    subject: "Thank you for your reservation!",
+    html: `
           <h1>Thank you for your reservation ${sendMailBookingInfo.customerInfo.firstName}!</h1>
           
           <p>For more information regarding your reservation information, visit <a href="http://localhost:3000/confirmation/${sendMailBookingInfo.bookingRef}">this link</a></p>
@@ -52,32 +48,33 @@ const addBooking = async (req, res) => {
           <p>Il Brutto</p>
 
         `,
-    });
+  });
 
-    res.send("Added new reservation to customer from Admin!");
+  res.send("Added new reservation to customer from Admin!");
 };
 
 // Collect one specfic booking object from DB that is used for the edit component in Front-End
 const getBookingRef = async (req, res) => {
-  const editBooking = await Booking.findOne({bookingRef: req.params.id});
+  const editBooking = await Booking.findOne({ bookingRef: req.params.id });
   res.json(editBooking);
 };
 
 // Collect a booking object and update in DB
 const updateBooking = async (req, res) => {
   // Collect attributes from front-end object
-  const { date, bookingRef, seatingTime, guestAmount , customerInfo } = req.body;
+  const { date, bookingRef, seatingTime, guestAmount, customerInfo } = req.body;
 
   // Update in DB
   await Booking.updateOne(
-    {bookingRef: bookingRef},
+    { bookingRef: bookingRef },
     {
       date: date,
       seatingTime: seatingTime,
       guestAmount: guestAmount,
-      customerInfo: customerInfo
+      customerInfo: customerInfo,
     }
   );
+  res.send("updated booking")
 };
 
 // Collect id which is booking ref and delete said reservation in DB
@@ -85,11 +82,11 @@ const deleteBooking = async (req, res) => {
   const bookingRef = req.params.id;
 
   // Collect bookingobject from DB and use to send email cancelled booking confirmation
-  const deletedBooking = await Booking.findOne({ bookingRef: bookingRef});
+  const deletedBooking = await Booking.findOne({ bookingRef: bookingRef });
 
   // Send confirmation mail with a link, to confirm that the reservation has been cancelled
   await transport.sendMail({
-    from: nodeMailerUser, 
+    from: nodeMailerUser,
     to: deletedBooking.customerInfo.email,
     subject: "Your reservation has been cancelled!",
     html: `
