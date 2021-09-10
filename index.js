@@ -25,17 +25,6 @@ app.use(adminRoute);
 app.use(bookingRoute);
 app.use(confirmationRoute);
 
-// Används för flash-meddelanden. Importera sen!!!
-//Use for express-flash/express-session
-/*app.use(
-  session({
-    secret: flashKey,
-    saveUninitialized: true,
-    resave: false,
-  })
-);
-app.use(flash());*/
-
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
